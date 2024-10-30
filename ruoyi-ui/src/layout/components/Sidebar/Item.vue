@@ -1,4 +1,6 @@
 <script>
+import svgIcon from '../../../components/SvgIcon/index.vue'
+
 export default {
   name: 'MenuItem',
   functional: true,
@@ -17,14 +19,23 @@ export default {
     const vnodes = []
 
     if (icon) {
-      vnodes.push(<svg-icon icon-class={icon}/>)
+      vnodes.push(h(svgIcon,{
+        props: {
+          iconClass: icon
+        }
+      }))
     }
 
     if (title) {
       if (title.length > 5) {
-        vnodes.push(<span slot='title' title={(title)}>{(title)}</span>)
+        vnodes.push(h('span',{
+          title,
+          slot: 'title'
+        }, title))
       } else {
-        vnodes.push(<span slot='title'>{(title)}</span>)
+        vnodes.push(h('span',{
+          slot:'title'
+        },title))
       }
     }
     return vnodes

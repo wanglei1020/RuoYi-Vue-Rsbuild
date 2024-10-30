@@ -1,4 +1,12 @@
 import { makeMap } from '@/utils/index'
+import {
+  Button,
+  Checkbox,
+  CheckboxButton,
+  Option,
+  Radio,
+  RadioButton,
+} from 'element-ui'
 
 // 参考https://github.com/vuejs/vue/blob/v2.6.10/src/platforms/web/server/util.js
 const isAttr = makeMap(
@@ -33,17 +41,20 @@ const componentChild = {
   },
   'el-input': {
     prepend(h, conf, key) {
-      return <template slot="prepend">{conf[key]}</template>
+      // return <template slot="prepend">{conf[key]}</template>
+      return h('template', { slot: 'prepend' }, conf[key])
     },
     append(h, conf, key) {
-      return <template slot="append">{conf[key]}</template>
+      // return <template slot="append">{conf[key]}</template>
+      return h('template', { slot: 'append' }, conf[key])
     }
   },
   'el-select': {
     options(h, conf, key) {
       const list = []
       conf.options.forEach(item => {
-        list.push(<el-option label={item.label} value={item.value} disabled={item.disabled}></el-option>)
+        // list.push(<el-option label={item.label} value={item.value} disabled={item.disabled}></el-option>)
+        list.push(h(Option, { props: item }))
       })
       return list
     }
@@ -52,8 +63,14 @@ const componentChild = {
     options(h, conf, key) {
       const list = []
       conf.options.forEach(item => {
-        if (conf.optionType === 'button') list.push(<el-radio-button label={item.value}>{item.label}</el-radio-button>)
-        else list.push(<el-radio label={item.value} border={conf.border}>{item.label}</el-radio>)
+        if (conf.optionType === 'button') {
+          // list.push(<el-radio-button label={item.value}>{item.label}</el-radio-button>)
+          list.push(h(RadioButton, { props: { label: item.value} }, item.label))
+        }
+        else {
+          // list.push(<el-radio label={item.value} border={conf.border}>{item.label}</el-radio>)
+          list.push(h(Radio, { props: { label: item.value, border: conf.border }}, item.label))
+        }
       })
       return list
     }
@@ -63,9 +80,11 @@ const componentChild = {
       const list = []
       conf.options.forEach(item => {
         if (conf.optionType === 'button') {
-          list.push(<el-checkbox-button label={item.value}>{item.label}</el-checkbox-button>)
+          // list.push(<el-checkbox-button label={item.value}>{item.label}</el-checkbox-button>)
+          list.push(h(CheckboxButton, { props: { label: item.value} }, item.label))
         } else {
-          list.push(<el-checkbox label={item.value} border={conf.border}>{item.label}</el-checkbox>)
+          // list.push(<el-checkbox label={item.value} border={conf.border}>{item.label}</el-checkbox>)
+          list.push(h(Checkbox, { props: { label: item.value, border: conf.border }}, item.label))
         }
       })
       return list
@@ -75,12 +94,15 @@ const componentChild = {
     'list-type': (h, conf, key) => {
       const list = []
       if (conf['list-type'] === 'picture-card') {
-        list.push(<i class="el-icon-plus"></i>)
+        // list.push(<i class="el-icon-plus"></i>)
+        list.push(h('i', { class: 'el-icon-plus' }))
       } else {
-        list.push(<el-button size="small" type="primary" icon="el-icon-upload">{conf.buttonText}</el-button>)
+        // list.push(<el-button size="small" type="primary" icon="el-icon-upload">{conf.buttonText}</el-button>)
+        list.push(h(Button, { props: { size: 'small', type: 'primary', icon: 'el-icon-upload' }}, conf.buttonText))
       }
       if (conf.showTip) {
-        list.push(<div slot="tip" class="el-upload__tip">只能上传不超过 {conf.fileSize}{conf.sizeUnit} 的{conf.accept}文件</div>)
+        // list.push(<div slot="tip" class="el-upload__tip">只能上传不超过 {conf.fileSize}{conf.sizeUnit} 的{conf.accept}文件</div>)
+        list.push(h('div', { slot: 'tip', class: 'el-upload__tip' }, `只能上传不超过 ${conf.fileSize}${conf.sizeUnit} 的${conf.accept}文件`))
       }
       return list
     }

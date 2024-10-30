@@ -572,7 +572,6 @@
 </template>
 
 <script>
-import { isArray } from 'util'
 import draggable from 'vuedraggable'
 import TreeNodeDialog from './TreeNodeDialog'
 import { isNumberStr } from '@/utils/index'
@@ -746,7 +745,7 @@ export default {
       this.currentNode = this.activeData.options
     },
     renderContent(h, { node, data, store }) {
-      return (
+      /*return (
         <div class="custom-tree-node">
           <span>{node.label}</span>
           <span class="node-operation">
@@ -760,7 +759,22 @@ export default {
             ></i>
           </span>
         </div>
-      )
+      )*/
+      return h('div', { class: 'custom-tree-node' }, [
+        h('span', null, node.label),
+        h('span', { class: 'node-operation' }, [
+          h('i', {
+            class: 'el-icon-plus',
+            attrs: { title: '添加' },
+            on: { click: () => this.append(this.data) }
+          }),
+          h('i', {
+            class: 'el-icon-delete',
+            attrs: { title: '删除' },
+            on: { click: () => this.remove(node, data) }
+          })
+        ])
+      ]);
     },
     append(data) {
       if (!data.children) {
@@ -794,7 +808,7 @@ export default {
       return val
     },
     onDefaultValueInput(str) {
-      if (isArray(this.activeData.defaultValue)) {
+      if (Array.isArray(this.activeData.defaultValue)) {
         // 数组
         this.$set(
           this.activeData,
