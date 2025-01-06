@@ -111,8 +111,14 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="字典编号" align="center" prop="dictId" />
       <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
-      <el-table-column label="字典类型" align="center" :show-overflow-tooltip="true">
+      <el-table-column label="字典类型" align="center" min-width="120px" :show-overflow-tooltip="true">
         <template slot-scope="scope">
+          <i
+            class="el-icon-document-copy"
+            style="margin-right: 0.5em; cursor: pointer"
+            v-clipboard:copy="scope.row.dictType"
+            v-clipboard:success="() => $modal.msgSuccess('复制成功')"
+          ></i>
           <router-link :to="'/system/dict-data/index/' + scope.row.dictId" class="link-type">
             <span>{{ scope.row.dictType }}</span>
           </router-link>
