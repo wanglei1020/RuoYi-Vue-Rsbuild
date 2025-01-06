@@ -24,9 +24,7 @@ export default defineConfig({
       index: './src/main.js',
     },
     define: publicVars,
-    alias: {
-      '@': './src',
-    },
+    tsconfigPath: './jsconfig.json'
   },
   html: {
     template: './public/index.html',
