@@ -30,7 +30,7 @@
 
 <script>
 import ScrollPane from './ScrollPane'
-import path from 'path-browserify'
+import { path } from '@/utils/ruoyi'
 
 export default {
   components: { ScrollPane },

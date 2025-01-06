@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import path from 'path-browserify'
+import { path } from '@/utils/ruoyi'
 import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'

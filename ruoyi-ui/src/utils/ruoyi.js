@@ -232,6 +232,12 @@ export function blobValidate(data) {
   return data.type !== 'application/json'
 }
 
+export const path = {
+  resolve(...args) {
+    return args.join('/')
+  },
+}
+
 export const variables = {
   menuColor: '#bfcbd9',
   menuLightColor: 'rgba(0,0,0,.70)',
