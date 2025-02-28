@@ -233,9 +233,24 @@ export function blobValidate(data) {
 }
 
 export const path = {
-  resolve(...args) {
-    return args.join('/')
-  },
+  resolve(...paths) {
+    let resolvedPath = ''
+    // 从右到左处理路径片段
+    for (let i = paths.length - 1; i >= 0; i--) {
+      const path = paths[i]
+
+      // 如果路径已经是绝对路径，则直接返回
+      if (path.startsWith('/')) {
+        resolvedPath = `${path}${resolvedPath}`
+        break
+      }
+
+      // 否则将路径片段拼接到已解析的路径中
+      resolvedPath = path ? `${resolvedPath}/${path}` : ''
+    }
+
+    return resolvedPath
+  }
 }
 
 export const variables = {
