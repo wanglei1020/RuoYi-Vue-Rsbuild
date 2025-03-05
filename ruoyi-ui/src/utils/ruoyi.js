@@ -246,10 +246,10 @@ export const path = {
       }
 
       // 否则将路径片段拼接到已解析的路径中
-      resolvedPath = path ? `${resolvedPath}/${path}` : ''
+      resolvedPath = path ? `${resolvedPath}/${path}` : resolvedPath
     }
 
-    return resolvedPath
+    return resolvedPath || '/'
   }
 }
 
